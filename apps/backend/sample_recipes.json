@@ -1,0 +1,194 @@
+[
+  {
+    "id": 2,
+    "created_at": "2025-05-12 22:56:52.062031+00",
+    "name": "Yeast Rolls",
+    "description": "Fluffy yeast rolls that are soft on the inside and slightly crisp on the outside.",
+    "ingredients": [
+      {
+        "name": "milk",
+        "quantity": "2",
+        "unit": "cups"
+      },
+      {
+        "name": "butter",
+        "quantity": "3",
+        "unit": "tablespoons"
+      },
+      {
+        "name": "sugar",
+        "quantity": "2",
+        "unit": "tablespoons"
+      },
+      {
+        "name": "salt",
+        "quantity": "2",
+        "unit": "teaspoons"
+      },
+      {
+        "name": "yeast cake",
+        "quantity": "1",
+        "unit": ""
+      },
+      {
+        "name": "warm water",
+        "quantity": "1/4",
+        "unit": "cup"
+      },
+      {
+        "name": "flour",
+        "quantity": "3",
+        "unit": "cups"
+      },
+      {
+        "name": "additional flour for kneading",
+        "quantity": "2.5",
+        "unit": "cups"
+      },
+      {
+        "name": "melted butter for brushing",
+        "quantity": "as needed",
+        "unit": ""
+      }
+    ],
+    "instructions": [
+      "Scald the milk and add butter, sugar, and salt to the milk when it is lukewarm.",
+      "Dissolve the yeast cake in 1/4 cup lukewarm water.",
+      "Add the dissolved yeast and 3 cups of flour to the milk mixture and beat thoroughly.",
+      "Cover the mixture and let it rise until light.",
+      "Cut down the dough and add enough flour to knead, approximately 2 1/2 cups.",
+      "Let it rise again after the second rising.",
+      "Take the dough and toss slightly on a floured board. Knead well.",
+      "Roll out the dough to 1/8 inch thickness and shape with a biscuit cutter.",
+      "Take a case knife handle dipped in flour and make a crease through the middle of each piece.",
+      "Brush over one-half of each piece with melted butter, fold, and press the edges together.",
+      "Place each piece in a well-greased pan, one inch apart, and let rise until light.",
+      "Bake in a hot oven for 12 to 15 minutes."
+    ]
+  },
+  {
+    "id": 3,
+    "created_at": "2025-05-12 23:01:28.03404+00",
+    "name": "Parmesan Cheese Biscuit",
+    "description": "A savory biscuit made with Parmesan cheese, butter, and a hint of red pepper, topped with a cream and cheese mixture.",
+    "ingredients": [
+      {
+        "name": "flour",
+        "quantity": "3",
+        "unit": "ozs"
+      },
+      {
+        "name": "red pepper",
+        "quantity": "1",
+        "unit": "pinch"
+      },
+      {
+        "name": "Parmesan cheese",
+        "quantity": "2",
+        "unit": "ozs"
+      },
+      {
+        "name": "butter",
+        "quantity": "2",
+        "unit": "ozs"
+      },
+      {
+        "name": "yolks of eggs",
+        "quantity": "2",
+        "unit": ""
+      },
+      {
+        "name": "salt",
+        "quantity": "1",
+        "unit": "teaspoon"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "1",
+        "unit": "teaspoon"
+      },
+      {
+        "name": "cream",
+        "quantity": "",
+        "unit": ""
+      }
+    ],
+    "instructions": [
+      "Sift flour and red pepper onto a board.",
+      "Rub in Parmesan cheese and butter.",
+      "Make a hollow in the center, add egg yolks, salt, and lemon juice.",
+      "Work the mixture to a smooth, thick paste.",
+      "Roll out very thin and stamp out in small discs.",
+      "Place on a floured baking tin, prick with a fork.",
+      "Bake in a low oven for a few minutes.",
+      "Whip cream, mix with grated Parmesan cheese and red pepper.",
+      "Put a small quantity in the center of each biscuit just before serving."
+    ]
+  },
+  {
+    "id": 4,
+    "created_at": "2025-05-12 23:06:54.271943+00",
+    "name": "Baked Halibut with Nut Sauce",
+    "description": "Tender baked halibut with a creamy and nutty flavor, served in slices with a rich nut sauce.",
+    "ingredients": [
+      {
+        "name": "Halibut",
+        "quantity": "3",
+        "unit": "lbs"
+      },
+      {
+        "name": "Cream",
+        "quantity": "2",
+        "unit": "pints"
+      },
+      {
+        "name": "Bread crumbs",
+        "quantity": "2",
+        "unit": "cups"
+      },
+      {
+        "name": "Salt",
+        "quantity": "to taste",
+        "unit": ""
+      },
+      {
+        "name": "Pepper",
+        "quantity": "to taste",
+        "unit": ""
+      },
+      {
+        "name": "Paprika",
+        "quantity": "to taste",
+        "unit": ""
+      },
+      {
+        "name": "Almonds",
+        "quantity": "0.25 to 0.5",
+        "unit": "lb"
+      },
+      {
+        "name": "Butter",
+        "quantity": "3",
+        "unit": "large tablespoons"
+      },
+      {
+        "name": "Sweet cream",
+        "quantity": "1",
+        "unit": "pint"
+      }
+    ],
+    "instructions": [
+      "Boil the halibut until tender, then cut it fine and remove the bones.",
+      "Add 1 pint of cream and 2 cups of bread crumbs from the inside of bread to the halibut.",
+      "Season with salt, pepper, and paprika.",
+      "Line a bread pan with waxed paper and fill it with the halibut mixture.",
+      "Place the pan in a larger pan filled with hot water.",
+      "Bake for 1 to 1¼ hours.",
+      "Once baked, cut the halibut into slices.",
+      "For the sauce, chop and blanch the almonds.",
+      "Melt the butter in a frying pan and brown the chopped almonds.",
+      "Add 1 pint of sweet cream to the pan and season to taste.",
+      "Serve the halibut slices with the nut sauce."
+    ]
+  }
+]
