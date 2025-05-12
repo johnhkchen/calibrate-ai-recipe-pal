@@ -1,0 +1,68 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "created_at": "2025-05-12T22:50:27.45688+00:00",
+      "name": "Yeast Rolls",
+      "description": "Soft and fluffy yeast rolls perfect for any meal.",
+      "ingredients": [
+        {
+          "name": "milk",
+          "quantity": "2",
+          "unit": "cups"
+        },
+        {
+          "name": "butter",
+          "quantity": "3",
+          "unit": "tablespoons"
+        },
+        {
+          "name": "sugar",
+          "quantity": "2",
+          "unit": "tablespoons"
+        },
+        {
+          "name": "salt",
+          "quantity": "2",
+          "unit": "teaspoons"
+        },
+        {
+          "name": "yeast cake",
+          "quantity": "1",
+          "unit": "cake"
+        },
+        {
+          "name": "luke warm water",
+          "quantity": "1/4",
+          "unit": "cup"
+        },
+        {
+          "name": "flour",
+          "quantity": "3",
+          "unit": "cups"
+        },
+        {
+          "name": "additional flour for kneading",
+          "quantity": "2 1/2",
+          "unit": "cups"
+        }
+      ],
+      "instructions": [
+        "Scald the milk and allow to cool slightly.",
+        "Add butter, sugar, and salt to the milk when it is lukewarm.",
+        "Dissolve yeast in lukewarm water and add it to the milk mixture.",
+        "Add 3 cups of flour to the mixture and beat thoroughly.",
+        "Cover the mixture and let it rise until light.",
+        "Cut down the mixture and add enough flour for kneading (about 2 1/2 cups).",
+        "Let the dough rise again after the second rising.",
+        "Take the dough and toss it slightly on a floured board, knead well.",
+        "Roll out the dough to 1/8 inch thickness and shape with a biscuit cutter.",
+        "Use a case knife handle dipped in flour to make a crease through the middle of each piece.",
+        "Brush over one-half of each piece with melted butter, fold, and press the edges together.",
+        "Place the rolls in a well-greased pan one inch apart.",
+        "Let rise until light and then bake in a hot oven for 12 to 15 minutes."
+      ]
+    }
+  ],
+  "count": null
+}
