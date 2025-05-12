@@ -2,18 +2,14 @@
 class Ingredient {
   name string
   quantity string
-  units string
-}
-
-class InstructionStep {
-  instruction string
-  notes string
+  unit string
 }
 
 class Recipe {
   name string
+  description string
   ingredients Ingredient[]
-  instructions InstructionStep[]
+  instructions string[]
 }
 
 // Create a function to extract the resume from a string.
