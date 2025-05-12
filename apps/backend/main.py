@@ -16,7 +16,8 @@ def ingredient_to_dict(ingredient):
     return {
         "name": ingredient.name,
         "quantity": ingredient.quantity,
-        "unit": ingredient.unit
+        "unit": ingredient.unit,
+        "pricePerUnit": ingredient.pricePerUnit,
     }
 
 @track
@@ -55,8 +56,19 @@ app = FastAPI()
 
 @app.get("/api/test")
 async def root():
-    recipe_text = "Boil till tender 3 lbs. of halibut; cut fine and bone. Add 1 pt. of cream and 2 cups of bread crumbs from inside of bread; season with salt, pepper and paprika. Bake in a bread pan lined with waxed paper; put pan in pan of hot water and bake 1 to 1¼ of an hour. Cut and serve in slices with nut sauce. Sauce: One-quarter to ½ lb. of well chopped, blanched almonds, 3 large tablespoons butter; put in frying pan and brown nuts chopped in it. Add to this 1 pt. of sweet cream and season.."
+    recipe_text = (
+        "Baked Fillet of Fish: Two slices of halibut cut from middle of fish, salt, pepper, lemon juice, melted butter, 2 cups oyster stuffing. Wash and wipe fish. Place one slice on a buttered fish sheet, brush with melted butter, sprinkle with salt and pepper, cover with oyster stuffing. Place second slice on top of oysters, season, and brush with butter. Bake 40 minutes, basting frequently with melted butter, turning pan often in order that the fish may be uniformly browned. Remove to hot platter; garnish with potato balls, parsley, and lemon; Hollandaise, tomato, or Bechamel sauce."
+    )
     return parse_recipe(recipe_text)
+
+@app.get("/api/demo")
+async def root():
+    results = (
+        supabase.table("recipes")
+        .select("*")
+        .execute()
+    )
+    return results
 
 @app.get("/prices")
 async def prices():
