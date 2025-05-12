@@ -55,7 +55,8 @@ app = FastAPI()
 
 @app.get("/api/test")
 async def root():
-  return parse_recipe("Two cups scalded milk, 3 tablespoons butter, 2 tablespoons sugar, 2 teaspoons salt, 1 yeast cake dissolved in 1/4 cup luke warm water, 3 cups flour. Add butter, sugar and salt to milk when luke warm water; add yeast and flour, beat thoroughly; cover and let rise until light, cut down and add enough flour to knead about 2 1/2 cups and let rise again after the second rising; take and toss slightly on a floured board; knead well and roll out to 1/8 inch thickness; shape with biscuit cutter; take a case knife handle dipped in flour and make a crease through the middle of each piece; brush over one-half of each piece with melted butter, fold and press the edges together; place in a well-greased pan one inch apart and let rise until light; bake in a hot oven 12 to 15 minutes.")
+    recipe_text = "Boil till tender 3 lbs. of halibut; cut fine and bone. Add 1 pt. of cream and 2 cups of bread crumbs from inside of bread; season with salt, pepper and paprika. Bake in a bread pan lined with waxed paper; put pan in pan of hot water and bake 1 to 1¼ of an hour. Cut and serve in slices with nut sauce. Sauce: One-quarter to ½ lb. of well chopped, blanched almonds, 3 large tablespoons butter; put in frying pan and brown nuts chopped in it. Add to this 1 pt. of sweet cream and season.."
+    return parse_recipe(recipe_text)
 
 @app.get("/prices")
 async def prices():
