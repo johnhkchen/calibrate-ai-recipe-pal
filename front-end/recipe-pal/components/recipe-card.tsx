@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { ChevronDown, ChevronUp, Leaf } from "lucide-react"
+import { ChevronDown, ChevronUp, Leaf, Copy, Check, Settings2 } from "lucide-react"
 import { useTransition } from "react"
 
 import type { Recipe } from "@/types/recipe"
@@ -14,6 +14,24 @@ import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { toggleVeganStatus } from "@/app/actions/recipe-actions"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 
 interface RecipeCardProps {
   recipe: Recipe
@@ -23,6 +41,11 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isVegan, setIsVegan] = useState(recipe.isVegan)
   const [isPending, startTransition] = useTransition()
+  const [isCopied, setIsCopied] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [modificationType, setModificationType] = useState<string>("")
+  const [customModification, setCustomModification] = useState<string>("")
+  const { toast } = useToast()
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded)
@@ -33,6 +56,79 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     startTransition(async () => {
       await toggleVeganStatus(recipe.id, checked)
     })
+  }
+
+  const copyRecipeToClipboard = async (modificationQuery?: string) => {
+    const recipeText = modificationQuery
+      ? `
+Modification Request: ${modificationQuery}
+
+${recipe.name}
+${recipe.description}
+
+Ingredients:
+${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.name}`).join('\n')}
+
+Instructions:
+${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
+      `.trim()
+      : `
+${recipe.name}
+${recipe.description}
+
+Ingredients:
+${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.name}`).join('\n')}
+
+Instructions:
+${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
+      `.trim()
+
+    try {
+      await navigator.clipboard.writeText(recipeText)
+      setIsCopied(true)
+      toast({
+        title: "Copied to clipboard",
+        description: modificationQuery ? "Modified recipe has been copied to your clipboard" : "Recipe has been copied to your clipboard",
+        duration: 2000,
+      })
+      setTimeout(() => setIsCopied(false), 2000)
+      if (isDialogOpen) {
+        setIsDialogOpen(false)
+        setModificationType("")
+        setCustomModification("")
+      }
+    } catch (err) {
+      console.error('Failed to copy recipe:', err)
+      toast({
+        title: "Error",
+        description: "Failed to copy recipe to clipboard",
+        variant: "destructive",
+        duration: 2000,
+      })
+    }
+  }
+
+  const handleModifyAndCopy = () => {
+    let modificationQuery = ""
+    
+    switch (modificationType) {
+      case "vegetarian":
+        modificationQuery = "Make this recipe vegetarian"
+        break
+      case "double":
+        modificationQuery = "Double all portions in this recipe"
+        break
+      case "half":
+        modificationQuery = "Halve all portions in this recipe"
+        break
+      case "custom":
+        modificationQuery = customModification
+        break
+      default:
+        return
+    }
+
+    copyRecipeToClipboard(modificationQuery)
   }
 
   return (
@@ -53,13 +149,80 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
           <CardTitle>{recipe.name}</CardTitle>
-          <button
-            onClick={toggleExpand}
-            className="p-1 rounded-full hover:bg-muted transition-colors"
-            aria-label={isExpanded ? "Collapse recipe details" : "Expand recipe details"}
-          >
-            {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => copyRecipeToClipboard()}
+              className="h-8 w-8"
+              title="Copy recipe to clipboard"
+            >
+              {isCopied ? (
+                <Check className="h-4 w-4 text-green-500" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </Button>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                  title="Modify recipe"
+                >
+                  <Settings2 className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Modify Recipe</DialogTitle>
+                  <DialogDescription>
+                    Choose how you want to modify this recipe. The recipe will be copied to your clipboard with the modification request.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <Select
+                    value={modificationType}
+                    onValueChange={setModificationType}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select modification" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="vegetarian">Make Vegetarian</SelectItem>
+                      <SelectItem value="double">Double Portions</SelectItem>
+                      <SelectItem value="half">Half Portions</SelectItem>
+                      <SelectItem value="custom">Custom Modification</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  
+                  {modificationType === "custom" && (
+                    <Input
+                      placeholder="Enter your modification request..."
+                      value={customModification}
+                      onChange={(e) => setCustomModification(e.target.value)}
+                    />
+                  )}
+
+                  <Button 
+                    className="w-full"
+                    onClick={handleModifyAndCopy}
+                    disabled={!modificationType || (modificationType === "custom" && !customModification)}
+                  >
+                    Copy Modified Recipe
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+            <button
+              onClick={toggleExpand}
+              className="p-1 rounded-full hover:bg-muted transition-colors"
+              aria-label={isExpanded ? "Collapse recipe details" : "Expand recipe details"}
+            >
+              {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
         <CardDescription>{recipe.description}</CardDescription>
       </CardHeader>
