@@ -21,14 +21,15 @@ export default function Home() {
     setError(null)
 
     try {
-      const response = await fetch("/api/recipes")
-
+      
+      const response = await fetch("http://100.114.95.71:8000/api/recipes")
+      console.log(response)
       if (!response.ok) {
         throw new Error("Failed to fetch recipes")
       }
 
       const data = await response.json()
-      setRecipes(data.recipes)
+      setRecipes(data.data)
     } catch (error) {
       console.error("Error fetching recipes:", error)
       setError("Failed to load recipes. Please try again later.")

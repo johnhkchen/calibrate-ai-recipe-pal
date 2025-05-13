@@ -56,8 +56,11 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost",
+    "http://localhost:8000",
     "https://pipe.b28.dev"
+    "http://localhost:3000",
+    "http://100.114.95.71:8000",
+    "*"
 ]
 
 app.add_middleware(
