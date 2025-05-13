@@ -151,22 +151,37 @@ Instructions:
 ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
       `.trim()
 
-    const success = await copyToClipboard(recipeText)
-    
-    if (success) {
-      setIsCopied(true)
-      toast({
-        title: "Copied to clipboard",
-        description: modificationQuery ? "Modified recipe has been copied to your clipboard" : "Recipe has been copied to your clipboard",
-        duration: 2000,
-      })
-      setTimeout(() => setIsCopied(false), 2000)
-      if (isDialogOpen) {
-        setIsDialogOpen(false)
-        setModificationType("")
-        setCustomModification("")
+    try {
+      const success = await copyToClipboard(recipeText)
+      
+      if (success) {
+        setIsCopied(true)
+        toast({
+          title: "Copied to clipboard",
+          description: modificationQuery ? "Modified recipe has been copied to your clipboard" : "Recipe has been copied to your clipboard",
+          duration: 2000,
+        })
+        
+        // Only close dialog and reset state after successful copy
+        if (isDialogOpen) {
+          setTimeout(() => {
+            setIsDialogOpen(false)
+            setModificationType("")
+            setCustomModification("")
+          }, 100)
+        }
+        
+        setTimeout(() => setIsCopied(false), 2000)
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to copy recipe to clipboard",
+          variant: "destructive",
+          duration: 2000,
+        })
       }
-    } else {
+    } catch (err) {
+      console.error('Failed to copy:', err)
       toast({
         title: "Error",
         description: "Failed to copy recipe to clipboard",
