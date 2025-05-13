@@ -50,19 +50,51 @@ def query_prices():
   return response.data
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "https://pipe.b28.dev"
+]
 
-@app.get("/api/test")
-async def root():
-    recipe_text = (
-        "Baked Fillet of Fish: Two slices of halibut cut from middle of fish, salt, pepper, lemon juice, melted butter, 2 cups oyster stuffing. Wash and wipe fish. Place one slice on a buttered fish sheet, brush with melted butter, sprinkle with salt and pepper, cover with oyster stuffing. Place second slice on top of oysters, season, and brush with butter. Bake 40 minutes, basting frequently with melted butter, turning pan often in order that the fish may be uniformly browned. Remove to hot platter; garnish with potato balls, parsley, and lemon; Hollandaise, tomato, or Bechamel sauce."
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+@app.get("/api/recipe/insert")
+async def insert_sample_recipe():
+    recipe_text = ("""
+
+CRAB MEAT CANAPES
+
+- 1 cup crab meat
+- 1 teaspoon Worcestershire sauce
+- ½ teaspoon paprika
+- ½ teaspoon salt
+- 1 teaspoon mustard
+- ½ teaspoon horseradish
+
+Chop crab meat, mix well with seasonings, and spread on thin rounds of untoasted brown bread. Garnish with small cube of lemon.
+
+"""
     )
     return parse_recipe(recipe_text)
 
-@app.get("/api/demo")
-async def root():
+@app.post("/api/recipe")
+async def add_recipe(recipe_text):
+    return parse_recipe(recipe_text)
+
+@app.get("/api/recipes")
+async def get_recipes():
     results = (
         supabase.table("recipes")
         .select("*")
@@ -73,3 +105,36 @@ async def root():
 @app.get("/prices")
 async def prices():
   return query_prices()
+
+@app.get("/api/ingredients")
+async def list_all_ingredients():
+    results = (
+        supabase.table("recipes")
+        .select("id, ingredients")
+        .execute()
+    )
+    # return results
+    ingredients = {}
+    for recipe in results.data:
+        for ingredient in recipe["ingredients"]:
+            name = ingredient["name"].lower()
+            if name in ingredients:
+                ingredients[name].append(recipe["id"])
+            ingredients[name] = [recipe["id"]]
+    return ingredients
+
+@app.get("/api/recipe_by_ingredient")
+async def list_recipes_using(ingredient):
+    results = (
+        supabase.table("recipes")
+        .select("id, ingredients")
+        .execute()
+    )
+    # return results
+    recipe_ids = []
+    for recipe in results.data:
+        for ingredient_used in recipe["ingredients"]:
+            if ingredient_used.lower() == ingredient:
+                recipe_ids.append(recipe["id"])
+    return recipe_ids
+
