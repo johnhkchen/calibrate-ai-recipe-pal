@@ -94,9 +94,10 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
 
   const copyRecipeToClipboard = async (modificationQuery?: string) => {
     const recipeText = modificationQuery
-      ? `
-Modification Request: ${modificationQuery}
+      ? `=== MODIFICATION REQUEST ===
+${modificationQuery}
 
+=== RECIPE ===
 ${recipe.name}
 ${recipe.description}
 
