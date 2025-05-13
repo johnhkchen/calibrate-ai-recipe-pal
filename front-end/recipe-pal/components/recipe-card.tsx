@@ -63,6 +63,35 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     })
   }
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      // Always use the fallback method for Tailscale compatibility
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      
+      // Make the textarea out of viewport
+      textArea.style.position = 'fixed'
+      textArea.style.left = '-999999px'
+      textArea.style.top = '-999999px'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+
+      try {
+        const successful = document.execCommand('copy')
+        textArea.remove()
+        return successful
+      } catch (err) {
+        console.error('Failed to copy:', err)
+        textArea.remove()
+        return false
+      }
+    } catch (err) {
+      console.error('Failed to copy:', err)
+      return false
+    }
+  }
+
   const copyRecipeToClipboard = async (modificationQuery?: string) => {
     const recipeText = modificationQuery
       ? `
@@ -88,8 +117,9 @@ Instructions:
 ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
       `.trim()
 
-    try {
-      await navigator.clipboard.writeText(recipeText)
+    const success = await copyToClipboard(recipeText)
+    
+    if (success) {
       setIsCopied(true)
       toast({
         title: "Copied to clipboard",
@@ -102,8 +132,7 @@ ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`
         setModificationType("")
         setCustomModification("")
       }
-    } catch (err) {
-      console.error('Failed to copy recipe:', err)
+    } else {
       toast({
         title: "Error",
         description: "Failed to copy recipe to clipboard",
