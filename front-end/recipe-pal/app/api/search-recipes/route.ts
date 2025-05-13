@@ -20,7 +20,6 @@ export async function POST(request: Request) {
       )
     })
 
-    // Simulate a delay to show loading state
     await new Promise((resolve) => setTimeout(resolve, 800))
 
     return NextResponse.json({ recipes: filteredRecipes })

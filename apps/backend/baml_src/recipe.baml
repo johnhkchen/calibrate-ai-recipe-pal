@@ -3,6 +3,7 @@ class Ingredient {
   name string
   quantity string
   unit string
+  pricePerUnit float
 }
 
 class Recipe {

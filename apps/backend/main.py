@@ -16,7 +16,8 @@ def ingredient_to_dict(ingredient):
     return {
         "name": ingredient.name,
         "quantity": ingredient.quantity,
-        "unit": ingredient.unit
+        "unit": ingredient.unit,
+        "pricePerUnit": ingredient.pricePerUnit,
     }
 
 @track
@@ -49,15 +50,91 @@ def query_prices():
   return response.data
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "https://pipe.b28.dev"
+]
 
-@app.get("/api/test")
-async def root():
-    recipe_text = "Boil till tender 3 lbs. of halibut; cut fine and bone. Add 1 pt. of cream and 2 cups of bread crumbs from inside of bread; season with salt, pepper and paprika. Bake in a bread pan lined with waxed paper; put pan in pan of hot water and bake 1 to 1¼ of an hour. Cut and serve in slices with nut sauce. Sauce: One-quarter to ½ lb. of well chopped, blanched almonds, 3 large tablespoons butter; put in frying pan and brown nuts chopped in it. Add to this 1 pt. of sweet cream and season.."
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+@app.get("/api/recipe/insert")
+async def insert_sample_recipe():
+    recipe_text = ("""
+
+CRAB MEAT CANAPES
+
+- 1 cup crab meat
+- 1 teaspoon Worcestershire sauce
+- ½ teaspoon paprika
+- ½ teaspoon salt
+- 1 teaspoon mustard
+- ½ teaspoon horseradish
+
+Chop crab meat, mix well with seasonings, and spread on thin rounds of untoasted brown bread. Garnish with small cube of lemon.
+
+"""
+    )
     return parse_recipe(recipe_text)
+
+@app.post("/api/recipe")
+async def add_recipe(recipe_text):
+    return parse_recipe(recipe_text)
+
+@app.get("/api/recipes")
+async def get_recipes():
+    results = (
+        supabase.table("recipes")
+        .select("*")
+        .execute()
+    )
+    return results
 
 @app.get("/prices")
 async def prices():
   return query_prices()
+
+@app.get("/api/ingredients")
+async def list_all_ingredients():
+    results = (
+        supabase.table("recipes")
+        .select("id, ingredients")
+        .execute()
+    )
+    # return results
+    ingredients = {}
+    for recipe in results.data:
+        for ingredient in recipe["ingredients"]:
+            name = ingredient["name"].lower()
+            if name in ingredients:
+                ingredients[name].append(recipe["id"])
+            ingredients[name] = [recipe["id"]]
+    return ingredients
+
+@app.get("/api/recipe_by_ingredient")
+async def list_recipes_using(ingredient):
+    results = (
+        supabase.table("recipes")
+        .select("id, ingredients")
+        .execute()
+    )
+    # return results
+    recipe_ids = []
+    for recipe in results.data:
+        for ingredient_used in recipe["ingredients"]:
+            if ingredient_used.lower() == ingredient:
+                recipe_ids.append(recipe["id"])
+    return recipe_ids
+
