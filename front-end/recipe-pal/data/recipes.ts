@@ -6,6 +6,7 @@ export const recipes: Recipe[] = [
     name: "Spaghetti Carbonara",
     description: "A classic Italian pasta dish with eggs, cheese, and pancetta",
     image: "/placeholder.svg?height=200&width=400&text=Carbonara",
+    isVegan: false,
     ingredients: [
       { name: "Spaghetti", pricePerUnit: 1.5, quantity: 1 },
       { name: "Eggs", pricePerUnit: 0.25, quantity: 3 },
@@ -27,6 +28,7 @@ export const recipes: Recipe[] = [
     name: "Chicken Tikka Masala",
     description: "Grilled chicken chunks in a creamy spiced tomato sauce",
     image: "/placeholder.svg?height=200&width=400&text=Tikka+Masala",
+    isVegan: false,
     ingredients: [
       { name: "Chicken Breast", pricePerUnit: 3.0, quantity: 2 },
       { name: "Yogurt", pricePerUnit: 1.2, quantity: 0.5 },
@@ -51,6 +53,7 @@ export const recipes: Recipe[] = [
     name: "Vegetable Stir Fry",
     description: "Quick and healthy vegetable stir fry with soy sauce",
     image: "/placeholder.svg?height=200&width=400&text=Stir+Fry",
+    isVegan: true,
     ingredients: [
       { name: "Bell Peppers", pricePerUnit: 1.0, quantity: 2 },
       { name: "Broccoli", pricePerUnit: 1.5, quantity: 1 },
@@ -75,6 +78,7 @@ export const recipes: Recipe[] = [
     name: "Chocolate Chip Cookies",
     description: "Classic homemade chocolate chip cookies with a soft center",
     image: "/placeholder.svg?height=200&width=400&text=Cookies",
+    isVegan: false,
     ingredients: [
       { name: "All-Purpose Flour", pricePerUnit: 0.5, quantity: 2.25 },
       { name: "Butter", pricePerUnit: 1.2, quantity: 1 },
@@ -103,6 +107,7 @@ export const recipes: Recipe[] = [
     name: "Avocado Toast",
     description: "Simple and nutritious breakfast with avocado on toast",
     image: "/placeholder.svg?height=200&width=400&text=Avocado+Toast",
+    isVegan: true,
     ingredients: [
       { name: "Avocado", pricePerUnit: 1.5, quantity: 1 },
       { name: "Bread", pricePerUnit: 0.3, quantity: 2 },
@@ -125,6 +130,7 @@ export const recipes: Recipe[] = [
     name: "Greek Salad",
     description: "Fresh Mediterranean salad with feta cheese and olives",
     image: "/placeholder.svg?height=200&width=400&text=Greek+Salad",
+    isVegan: false,
     ingredients: [
       { name: "Cucumber", pricePerUnit: 0.8, quantity: 1 },
       { name: "Tomatoes", pricePerUnit: 0.5, quantity: 3 },

@@ -20,8 +20,7 @@ export async function POST(request: Request) {
       )
     })
 
-    // Simulate a delay to show loading state (remove in production)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 800))
 
     return NextResponse.json({ recipes: filteredRecipes })
   } catch (error) {
