@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronDown, ChevronUp, Leaf, Copy, Check, Settings2 } from "lucide-react"
 import { useTransition } from "react"
@@ -39,13 +39,18 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [isVegan, setIsVegan] = useState(recipe.isVegan)
+  const [isVegan, setIsVegan] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [isCopied, setIsCopied] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [modificationType, setModificationType] = useState<string>("")
   const [customModification, setCustomModification] = useState<string>("")
   const { toast } = useToast()
+
+  // Set initial vegan status after component mounts
+  useEffect(() => {
+    setIsVegan(recipe.isVegan || false)
+  }, [recipe.isVegan])
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded)
@@ -67,7 +72,7 @@ ${recipe.name}
 ${recipe.description}
 
 Ingredients:
-${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.name}`).join('\n')}
+${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.unit || ''} ${ing.name}`).join('\n')}
 
 Instructions:
 ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
@@ -77,7 +82,7 @@ ${recipe.name}
 ${recipe.description}
 
 Ingredients:
-${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.name}`).join('\n')}
+${recipe.ingredients.map(ing => `- ${ing.quantity} ${ing.unit || ''} ${ing.name}`).join('\n')}
 
 Instructions:
 ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`).join('\n')}
