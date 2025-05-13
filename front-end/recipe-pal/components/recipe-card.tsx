@@ -92,6 +92,39 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     }
   }
 
+  const handleModifyAndCopy = () => {
+    let modificationQuery = ""
+    
+    switch (modificationType) {
+      case "vegetarian":
+        modificationQuery = "Make this recipe vegetarian"
+        break
+      case "double":
+        modificationQuery = "Double all portions in this recipe"
+        break
+      case "half":
+        modificationQuery = "Halve all portions in this recipe"
+        break
+      case "custom":
+        modificationQuery = customModification.trim()
+        break
+      default:
+        return
+    }
+
+    if (!modificationQuery) {
+      toast({
+        title: "Error",
+        description: "Please enter a modification request",
+        variant: "destructive",
+        duration: 2000,
+      })
+      return
+    }
+
+    copyRecipeToClipboard(modificationQuery)
+  }
+
   const copyRecipeToClipboard = async (modificationQuery?: string) => {
     const recipeText = modificationQuery
       ? `=== MODIFICATION REQUEST ===
@@ -141,29 +174,6 @@ ${recipe.instructions.map((instruction, index) => `${index + 1}. ${instruction}`
         duration: 2000,
       })
     }
-  }
-
-  const handleModifyAndCopy = () => {
-    let modificationQuery = ""
-    
-    switch (modificationType) {
-      case "vegetarian":
-        modificationQuery = "Make this recipe vegetarian"
-        break
-      case "double":
-        modificationQuery = "Double all portions in this recipe"
-        break
-      case "half":
-        modificationQuery = "Halve all portions in this recipe"
-        break
-      case "custom":
-        modificationQuery = customModification
-        break
-      default:
-        return
-    }
-
-    copyRecipeToClipboard(modificationQuery)
   }
 
   return (
